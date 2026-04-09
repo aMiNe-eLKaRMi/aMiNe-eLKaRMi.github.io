@@ -193,7 +193,8 @@ nav {
 .hero-content {
   position: relative; z-index: 2;
   padding: 0 clamp(1.5rem, 8vw, 10rem);
-  max-width: 900px;
+  max-width: 100%;
+  width: 100%;
 }
 .hero-badge {
   display: inline-flex; align-items: center; gap: 8px;
@@ -221,15 +222,18 @@ nav {
 }
 .hero-name {
   font-family: var(--ff-display);
-  font-size: clamp(3rem, 8vw, 7rem);
+  font-size: clamp(2.8rem, 7vw, 6.5rem);
   font-weight: 800;
-  line-height: 0.95;
-  letter-spacing: -4px;
+  line-height: 1.0;
+  letter-spacing: -2px;
   margin-bottom: 1.5rem;
   background: linear-gradient(135deg, #fff 0%, var(--violet2) 50%, var(--cyan) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  word-break: keep-all;
+  overflow-wrap: normal;
+  white-space: nowrap;
 }
 .hero-title {
   font-family: var(--ff-body);
@@ -864,6 +868,7 @@ body::after {
   .contact-wrapper { grid-template-columns: 1fr; gap: 3rem; }
   .nav-links { display: none; }
   .hamburger { display: flex; }
+  .hero-name { font-size: clamp(2.5rem, 6vw, 5rem); letter-spacing: -1px; white-space: nowrap; }
 }
 @media (max-width: 600px) {
   .about-stats { grid-template-columns: repeat(2, 1fr); }
@@ -872,6 +877,7 @@ body::after {
   .photo-frame { width: 220px; height: 220px; }
   .hero-btns { flex-direction: column; }
   .lang-grid { flex-direction: column; }
+  .hero-name { font-size: clamp(2rem, 11vw, 3rem); white-space: nowrap; letter-spacing: -1px; }
 }
 
 /* ===== MOBILE NAV ===== */
@@ -1189,11 +1195,11 @@ body::after {
         </div>
         <i class="fa-solid fa-arrow-up-right-from-square" style="color: var(--text3); font-size: 12px;"></i>
       </a>
-      <a href="mailto:elkarmi.amine.01@gmail.com" class="contact-item reveal">
+      <a href="/cdn-cgi/l/email-protection#a3c6cfc8c2d1ceca8dc2cecacdc68d9392e3c4cec2cacf8dc0ccce" class="contact-item reveal">
         <div class="contact-item-icon"><i class="fa-solid fa-envelope"></i></div>
         <div class="contact-item-text">
           <div class="contact-item-label">Email</div>
-          <div class="contact-item-val">elkarmi.amine.01@gmail.com</div>
+          <div class="contact-item-val"><span class="__cf_email__" data-cfemail="40252c2b21322d296e212d292e256e707100272d21292c6e232f2d">[email&#160;protected]</span></div>
         </div>
         <i class="fa-solid fa-arrow-up-right-from-square" style="color: var(--text3); font-size: 12px;"></i>
       </a>
@@ -1207,7 +1213,7 @@ body::after {
       <div class="social-links reveal">
         <a href="https://www.linkedin.com/in/amine-elkarmi-255a86243/" target="_blank" class="social-link"><i class="fa-brands fa-linkedin-in"></i></a>
         <a href="https://github.com/" target="_blank" class="social-link"><i class="fa-brands fa-github"></i></a>
-        <a href="mailto:elkarmi.amine.01@gmail.com" class="social-link"><i class="fa-solid fa-envelope"></i></a>
+        <a href="/cdn-cgi/l/email-protection#3451585f5546595d1a55595d5a511a0405745359555d581a575b59" class="social-link"><i class="fa-solid fa-envelope"></i></a>
       </div>
     </div>
     <div class="contact-form reveal">
@@ -1236,12 +1242,12 @@ body::after {
   <div class="footer-text">© 2025 — Conçu & développé avec passion</div>
   <div style="display:flex; gap: 1rem;">
     <a href="https://www.linkedin.com/in/amine-elkarmi-255a86243/" target="_blank" style="color: var(--text3); font-size: 16px; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color=''"><i class="fa-brands fa-linkedin"></i></a>
-    <a href="mailto:elkarmi.amine.01@gmail.com" style="color: var(--text3); font-size: 16px; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color=''"><i class="fa-solid fa-envelope"></i></a>
+    <a href="/cdn-cgi/l/email-protection#d7b2bbbcb6a5babef9b6babeb9b2f9e7e697b0bab6bebbf9b4b8ba" style="color: var(--text3); font-size: 16px; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#a78bfa'" onmouseout="this.style.color=''"><i class="fa-solid fa-envelope"></i></a>
   </div>
 </footer>
 
 <!-- =================== SCRIPTS =================== -->
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* === CURSOR === */
 const cursor = document.getElementById('cursor');
 const ring = document.getElementById('cursor-ring');
@@ -1384,17 +1390,4 @@ function initReveal() {
     const t = clock.getElapsedTime();
     particles.rotation.y = t * 0.04;
     particles.rotation.x = t * 0.02;
-    sphere.rotation.y = t * 0.08;
-    sphere.rotation.x = t * 0.04;
-    innerSphere.rotation.y = -t * 0.12;
-    torus.rotation.z = t * 0.06;
-    torus2.rotation.z = -t * 0.04;
-    scene.rotation.y += (mouseX - scene.rotation.y) * 0.04;
-    scene.rotation.x += (-mouseY - scene.rotation.x) * 0.04;
-    renderer.render(scene, camera);
-  }
-  animate();
-})();
-</script>
-</body>
-</html>
+    sphere.rotation.y = t *
