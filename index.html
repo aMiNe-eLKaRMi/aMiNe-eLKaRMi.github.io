@@ -1,3 +1,6 @@
+Voici le code HTML complet avec l'ajout du mode clair/sombre et du système de traduction français/anglais, tout en conservant l'intégralité des fonctionnalités existantes.
+
+```html
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -15,10 +18,39 @@
   --text:#e8e6f0;--text2:#9490b0;--text3:#6b6885;
   --fd:'Syne',sans-serif;--fb:'Space Grotesk',sans-serif;--fm:'JetBrains Mono',monospace;
   --ease:cubic-bezier(0.16,1,0.3,1);
+  --bg-gradient:180deg,var(--black),var(--dark);
+  --nav-bg:rgba(5,5,8,.75);
+  --btn-o-border:var(--border);
+  --btn-o-color:var(--text);
+  --card-hover-border:rgba(139,92,246,.4);
 }
-html{scroll-behavior:smooth}
-body{font-family:var(--fb);background:var(--black);color:var(--text);overflow-x:hidden;cursor:none;-webkit-font-smoothing:antialiased}
+body.light-mode{
+  --black:#f8f9ff;--dark:#eff0f6;--card:#ffffff;--card2:#f4f5fc;
+  --border:rgba(60,50,120,0.12);--blue:#4f8ef7;--violet:#7c3aed;--violet2:#8b5cf6;--cyan:#0891b2;
+  --glow-v:rgba(124,58,237,0.2);
+  --text:#1e1b2e;--text2:#4a4768;--text3:#7a7895;
+  --bg-gradient:180deg,var(--black),var(--dark);
+  --nav-bg:rgba(255,255,255,.85);
+  --btn-o-border:rgba(60,50,120,0.2);
+  --btn-o-color:#1e1b2e;
+  --card-hover-border:#7c3aed;
+}
+body{font-family:var(--fb);background:var(--black);color:var(--text);overflow-x:hidden;cursor:none;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+.light-mode #cur{background:#7c3aed;mix-blend-mode:normal;}
+.light-mode #cur-r{border-color:rgba(124,58,237,.6);}
+.light-mode .sk-bg{background:rgba(0,0,0,.05);}
+.light-mode .tag{background:rgba(124,58,237,.08);border-color:rgba(124,58,237,.25);color:#7c3aed;}
+.light-mode .ed-bx,.light-mode .ce-ico,.light-mode .sk-ci,.light-mode .ct-ic{background:rgba(124,58,237,.1);}
+.light-mode .ct-item,.light-mode .ed-card,.light-mode .sk-cat,.light-mode .pj-card,.light-mode .ce-item,.light-mode .lg-card{background:var(--card);border-color:var(--border);}
+.light-mode .st-card{background:var(--card);}
+.light-mode .n-cta{box-shadow:0 0 20px rgba(124,58,237,.3);}
+.light-mode .h-badge{background:rgba(124,58,237,.08);border-color:rgba(124,58,237,.3);}
+.light-mode .btn-o{border-color:var(--border);color:var(--text);}
+.light-mode .btn-o:hover{border-color:#7c3aed;color:#7c3aed;background:rgba(124,58,237,.05);}
+.light-mode .soc-a{background:var(--card);border-color:var(--border);color:var(--text2);}
+.light-mode .soc-a:hover{border-color:#7c3aed;color:#7c3aed;}
 #cur{position:fixed;width:12px;height:12px;background:var(--violet);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:screen;transition:width .3s,height .3s}
+.light-mode #cur{mix-blend-mode:normal;}
 #cur-r{position:fixed;width:36px;height:36px;border:1.5px solid rgba(139,92,246,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all .15s ease}
 #loader{position:fixed;inset:0;background:var(--black);z-index:9997;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:24px}
 .l-logo{font-family:var(--fd);font-size:clamp(2.5rem,6vw,4rem);font-weight:800;background:linear-gradient(135deg,var(--blue),var(--violet),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-2px}
@@ -27,13 +59,16 @@ body{font-family:var(--fb);background:var(--black);color:var(--text);overflow-x:
 @keyframes ld{from{width:0}to{width:100%}}
 .l-txt{font-family:var(--fm);font-size:11px;color:var(--text3);letter-spacing:3px;text-transform:uppercase;animation:bk 1s infinite}
 @keyframes bk{50%{opacity:.3}}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 clamp(1rem,5vw,4rem);height:72px;display:flex;align-items:center;justify-content:space-between;background:rgba(5,5,8,.75);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:background .4s}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 clamp(1rem,5vw,4rem);height:72px;display:flex;align-items:center;justify-content:space-between;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:background .4s}
 .n-logo{font-family:var(--fd);font-size:22px;font-weight:800;background:linear-gradient(135deg,var(--blue),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;letter-spacing:-1px}
 .n-links{display:flex;gap:2rem;list-style:none}
 .n-links a{font-family:var(--fm);font-size:12px;color:var(--text2);text-decoration:none;letter-spacing:1px;text-transform:uppercase;transition:color .3s;position:relative}
 .n-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--violet);transition:width .3s var(--ease)}
 .n-links a:hover{color:var(--violet2)}
 .n-links a:hover::after{width:100%}
+.n-actions{display:flex;align-items:center;gap:12px;}
+.theme-toggle,.lang-toggle{background:rgba(139,92,246,.1);border:1px solid var(--border);border-radius:40px;width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--violet2);cursor:none;transition:all .3s;backdrop-filter:blur(4px);}
+.theme-toggle:hover,.lang-toggle:hover{background:rgba(139,92,246,.2);transform:translateY(-2px);border-color:var(--violet);}
 .n-cta{padding:10px 22px;background:linear-gradient(135deg,var(--blue),var(--violet));color:#fff;border:none;border-radius:8px;font-family:var(--fm);font-size:12px;letter-spacing:1px;text-transform:uppercase;cursor:none;text-decoration:none;transition:opacity .3s,transform .3s;box-shadow:0 0 20px var(--glow-v)}
 .n-cta:hover{opacity:.85;transform:translateY(-1px)}
 .hamburger{display:none;flex-direction:column;gap:5px;cursor:none;background:none;border:none;padding:4px}
@@ -45,13 +80,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 clamp(1rem,5vw,4re
 .h-badge::before{content:'';width:6px;height:6px;background:var(--violet);border-radius:50%;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.5)}}
 .h-name{font-family:var(--fd);font-size:clamp(2.8rem,7vw,6.5rem);font-weight:800;line-height:1;letter-spacing:-2px;margin-bottom:1.5rem;background:linear-gradient(135deg,#fff 0%,var(--violet2) 50%,var(--cyan) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;white-space:nowrap}
+.light-mode .h-name{background:linear-gradient(135deg,#1e1b2e 0%,var(--violet) 50%,var(--cyan) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .h-title{font-size:clamp(1rem,2.5vw,1.4rem);color:var(--text2);margin-bottom:1rem;line-height:1.6}
 .h-title span{color:var(--cyan);font-weight:500}
 .h-desc{font-size:clamp(.875rem,1.5vw,1rem);color:var(--text3);max-width:520px;line-height:1.8;margin-bottom:2.5rem}
 .h-btns{display:flex;gap:1rem;flex-wrap:wrap}
 .btn-p{display:inline-flex;align-items:center;gap:10px;padding:14px 32px;background:linear-gradient(135deg,var(--blue),var(--violet));color:#fff;text-decoration:none;border-radius:10px;font-weight:600;font-size:.9rem;transition:all .3s var(--ease);box-shadow:0 0 30px var(--glow-v);cursor:none;border:none}
 .btn-p:hover{transform:translateY(-3px);box-shadow:0 8px 40px var(--glow-v)}
-.btn-o{display:inline-flex;align-items:center;gap:10px;padding:14px 32px;background:transparent;color:var(--text);text-decoration:none;border-radius:10px;font-weight:500;font-size:.9rem;border:1px solid var(--border);transition:all .3s var(--ease);cursor:none}
+.btn-o{display:inline-flex;align-items:center;gap:10px;padding:14px 32px;background:transparent;color:var(--btn-o-color);text-decoration:none;border-radius:10px;font-weight:500;font-size:.9rem;border:1px solid var(--btn-o-border);transition:all .3s var(--ease);cursor:none}
 .btn-o:hover{border-color:var(--violet);color:var(--violet2);transform:translateY(-3px);background:rgba(139,92,246,.05)}
 .h-scroll{position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px}
 .h-scroll span{font-family:var(--fm);font-size:10px;color:var(--text3);letter-spacing:3px;text-transform:uppercase}
@@ -62,7 +98,7 @@ section{padding:clamp(4rem,10vw,8rem) clamp(1.5rem,8vw,10rem)}
 .s-label::after{content:'';flex:1;max-width:60px;height:1px;background:var(--violet);opacity:.5}
 .s-title{font-family:var(--fd);font-size:clamp(2rem,5vw,3.5rem);font-weight:800;letter-spacing:-2px;line-height:1.1;margin-bottom:1rem}
 .gt{background:linear-gradient(135deg,var(--blue),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-#about{background:linear-gradient(180deg,var(--black),var(--dark))}
+#about{background:linear-gradient(var(--bg-gradient))}
 .a-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:5rem;align-items:center;margin-top:3rem}
 .p-wrap{position:relative;display:flex;align-items:center;justify-content:center}
 .p-ring{position:absolute;border-radius:50%;animation:spin 8s linear infinite}
@@ -86,7 +122,7 @@ section{padding:clamp(4rem,10vw,8rem) clamp(1.5rem,8vw,10rem)}
 .sk-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-top:3rem}
 .sk-cat{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.75rem;transition:all .4s var(--ease);position:relative;overflow:hidden}
 .sk-cat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--violet));opacity:0;transition:opacity .3s}
-.sk-cat:hover{border-color:rgba(139,92,246,.4);transform:translateY(-6px)}
+.sk-cat:hover{border-color:var(--card-hover-border);transform:translateY(-6px)}
 .sk-cat:hover::before{opacity:1}
 .sk-ch{display:flex;align-items:center;gap:12px;margin-bottom:1.5rem}
 .sk-ci{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,rgba(79,142,247,.15),rgba(139,92,246,.15));border:1px solid rgba(139,92,246,.2);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--violet2)}
@@ -96,12 +132,13 @@ section{padding:clamp(4rem,10vw,8rem) clamp(1.5rem,8vw,10rem)}
 .sk-nm{font-size:.85rem;color:var(--text2)}
 .sk-pc{font-family:var(--fm);font-size:11px;color:var(--text3)}
 .sk-bg{height:4px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden}
+.light-mode .sk-bg{background:rgba(0,0,0,.08);}
 .sk-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--violet));border-radius:99px;width:0%;transition:width 1.2s var(--ease)}
 #projects{background:var(--black)}
 .pj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-top:3rem}
 .pj-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;position:relative;overflow:hidden;transition:all .4s var(--ease);cursor:none}
 .pj-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(79,142,247,.04),rgba(139,92,246,.08));opacity:0;transition:opacity .4s}
-.pj-card:hover{transform:translateY(-8px);border-color:rgba(139,92,246,.4);box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.pj-card:hover{transform:translateY(-8px);border-color:var(--card-hover-border);box-shadow:0 20px 60px rgba(0,0,0,.4)}
 .pj-card:hover::after{opacity:1}
 .pj-n{font-family:var(--fm);font-size:11px;color:var(--violet);letter-spacing:2px;margin-bottom:1rem;opacity:.7}
 .pj-ic{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:1.25rem}
@@ -154,6 +191,7 @@ section{padding:clamp(4rem,10vw,8rem) clamp(1.5rem,8vw,10rem)}
 .fg{margin-bottom:1.25rem}
 .fg label{display:block;font-family:var(--fm);font-size:11px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
 .fg input,.fg textarea{width:100%;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:12px 16px;color:var(--text);font-family:var(--fb);font-size:.9rem;outline:none;transition:border-color .3s;resize:none}
+.light-mode .fg input,.light-mode .fg textarea{background:rgba(0,0,0,.02);}
 .fg input:focus,.fg textarea:focus{border-color:var(--violet)}
 .fg textarea{height:120px}
 footer{background:var(--dark);border-top:1px solid var(--border);padding:2.5rem clamp(1.5rem,8vw,10rem);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
@@ -165,234 +203,188 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:2.5rem 
 ::-webkit-scrollbar-track{background:var(--black)}
 ::-webkit-scrollbar-thumb{background:var(--violet);border-radius:99px}
 .mob-nav{display:none;position:fixed;inset:0;background:rgba(5,5,8,.97);backdrop-filter:blur(20px);z-index:95;flex-direction:column;align-items:center;justify-content:center;gap:2rem}
+.light-mode .mob-nav{background:rgba(255,255,255,.97);}
 .mob-nav.open{display:flex}
 .mob-nav a{font-family:var(--fd);font-size:2rem;font-weight:700;color:var(--text);text-decoration:none;transition:color .3s}
 .mob-nav a:hover{color:var(--violet2)}
-@media(max-width:900px){.a-grid{grid-template-columns:1fr;text-align:center;gap:3rem}.p-wrap{justify-content:center}.a-stats{grid-template-columns:repeat(3,1fr)}.ct-wrap{grid-template-columns:1fr;gap:3rem}.n-links{display:none}.hamburger{display:flex}.h-name{font-size:clamp(2.5rem,6vw,5rem)}}
+@media(max-width:900px){.a-grid{grid-template-columns:1fr;text-align:center;gap:3rem}.p-wrap{justify-content:center}.a-stats{grid-template-columns:repeat(3,1fr)}.ct-wrap{grid-template-columns:1fr;gap:3rem}.n-links{display:none}.hamburger{display:flex}.h-name{font-size:clamp(2.5rem,6vw,5rem)}.n-actions{gap:8px}}
 @media(max-width:600px){.a-stats{grid-template-columns:repeat(2,1fr)}.p-r1{width:240px;height:240px}.p-r2{width:280px;height:280px}.p-frame{width:200px;height:200px}.h-btns{flex-direction:column}.lg-grid{flex-direction:column}.h-name{font-size:clamp(2rem,11vw,3rem)}}
 </style>
 </head>
 <body>
 <div id="cur"></div>
 <div id="cur-r"></div>
-
 <div id="loader">
   <div class="l-logo">AE</div>
   <div class="l-bar"><div class="l-fill"></div></div>
-  <div class="l-txt">Initialisation...</div>
+  <div class="l-txt" data-i18n="loader_txt">Initialisation...</div>
 </div>
-
 <nav id="navbar">
   <a href="#hero" class="n-logo">AE.</a>
   <ul class="n-links">
-    <li><a href="#about">À propos</a></li>
-    <li><a href="#skills">Compétences</a></li>
-    <li><a href="#projects">Projets</a></li>
-    <li><a href="#education">Formation</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#about" data-i18n="nav_about">À propos</a></li>
+    <li><a href="#skills" data-i18n="nav_skills">Compétences</a></li>
+    <li><a href="#projects" data-i18n="nav_projects">Projets</a></li>
+    <li><a href="#education" data-i18n="nav_education">Formation</a></li>
+    <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
   </ul>
-  <a href="#contact" class="n-cta">Contact Me</a>
+  <div class="n-actions">
+    <button class="theme-toggle" id="themeToggle" aria-label="Dark/Light mode"><i class="fa-solid fa-moon"></i></button>
+    <button class="lang-toggle" id="langToggle" aria-label="Langue"><i class="fa-solid fa-globe"></i> <span id="langLabel">FR</span></button>
+    <a href="#contact" class="n-cta" data-i18n="nav_cta">Contact Me</a>
+  </div>
   <button class="hamburger" id="ham" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 <div class="mob-nav" id="mobNav">
-  <a href="#about" onclick="closeMob()">À propos</a>
-  <a href="#skills" onclick="closeMob()">Compétences</a>
-  <a href="#projects" onclick="closeMob()">Projets</a>
-  <a href="#education" onclick="closeMob()">Formation</a>
-  <a href="#certifications" onclick="closeMob()">Certifications</a>
-  <a href="#contact" onclick="closeMob()">Contact</a>
+  <a href="#about" data-i18n="nav_about" onclick="closeMob()">À propos</a>
+  <a href="#skills" data-i18n="nav_skills" onclick="closeMob()">Compétences</a>
+  <a href="#projects" data-i18n="nav_projects" onclick="closeMob()">Projets</a>
+  <a href="#education" data-i18n="nav_education" onclick="closeMob()">Formation</a>
+  <a href="#certifications" data-i18n="nav_certifications" onclick="closeMob()">Certifications</a>
+  <a href="#contact" data-i18n="nav_contact" onclick="closeMob()">Contact</a>
 </div>
-
 <section id="hero">
   <canvas id="three-canvas"></canvas>
   <div class="h-content">
-    <div class="h-badge">Disponible pour stage / alternance</div>
+    <div class="h-badge" data-i18n="hero_badge">Disponible pour stage / alternance</div>
     <h1 class="h-name">AMINE </h1>
     <h1 class="h-name">ELKARMI</h1>
-    <p class="h-title">Étudiant en <span>Génie Informatique</span> — EMSI Marrakech</p>
-    <p class="h-desc">Passionné par le développement logiciel et l'intelligence artificielle, je construis des solutions numériques modernes, performantes et innovantes.</p>
+    <p class="h-title"><span data-i18n="hero_title_part1">Étudiant en</span> <span data-i18n="hero_title_part2">Génie Informatique</span> — EMSI Marrakech</p>
+    <p class="h-desc" data-i18n="hero_desc">Passionné par le développement logiciel et l'intelligence artificielle, je construis des solutions numériques modernes, performantes et innovantes.</p>
     <div class="h-btns">
-      <a href="#projects" class="btn-p"><i class="fa-solid fa-rocket"></i> Voir mes projets</a>
-      <a href="cv-amine-elkarmi.pdf" download class="btn-o"><i class="fa-solid fa-download"></i> Télécharger CV</a>
+      <a href="#projects" class="btn-p" data-i18n="hero_btn1"><i class="fa-solid fa-rocket"></i> Voir mes projets</a>
+      <a href="cv-amine-elkarmi.pdf" download class="btn-o" data-i18n="hero_btn2"><i class="fa-solid fa-download"></i> Télécharger CV</a>
     </div>
   </div>
-  <div class="h-scroll"><span>Scroll</span><div class="s-line"></div></div>
+  <div class="h-scroll"><span data-i18n="scroll_text">Scroll</span><div class="s-line"></div></div>
 </section>
-
 <section id="about">
-  <div class="s-label">01 — À propos</div>
+  <div class="s-label"><span data-i18n="about_label">01 — À propos</span></div>
   <div class="a-grid">
-    <div class="p-wrap reveal">
-      <div class="p-glow"></div>
-      <div class="p-ring p-r1"></div>
-      <div class="p-ring p-r2"></div>
-      <div class="p-frame">
-        <img src="MonPhoto.jpg" alt="Amine Elkarmi" onerror="this.parentElement.innerHTML='<div class=\'p-ph\'><i class=\'fa-solid fa-user\'></i></div>'">
-      </div>
-    </div>
-    <div class="a-txt">
-      <h2 class="s-title reveal">Qui suis-<span class="gt">je ?</span></h2>
-      <p class="lead reveal">Passionné par l'informatique et l'intelligence artificielle, je cherche constamment à repousser les limites de la technologie.</p>
-      <p class="reveal">Étudiant en cycle ingénieur à l'EMSI Marrakech, je combine une solide base théorique avec une expérience pratique sur des projets concrets allant du développement web full-stack à la conception de modèles d'IA.</p>
-      <p class="reveal">Mon approche : concevoir des solutions élégantes pour des problèmes complexes, avec un souci constant de la qualité du code et de l'expérience utilisateur.</p>
-      <div class="a-stats reveal">
-        <div class="st-card"><div class="st-n">6+</div><div class="st-l">Langages</div></div>
-        <div class="st-card"><div class="st-n">3</div><div class="st-l">Projets</div></div>
-        <div class="st-card"><div class="st-n">4+</div><div class="st-l">Certifs</div></div>
-      </div>
-    </div>
+    <div class="p-wrap reveal"><div class="p-glow"></div><div class="p-ring p-r1"></div><div class="p-ring p-r2"></div><div class="p-frame"><img src="MonPhoto.jpg" alt="Amine Elkarmi" onerror="this.parentElement.innerHTML='<div class=\'p-ph\'><i class=\'fa-solid fa-user\'></i></div>'"></div></div>
+    <div class="a-txt"><h2 class="s-title reveal" data-i18n="about_title">Qui suis-<span class="gt">je ?</span></h2><p class="lead reveal" data-i18n="about_lead">Passionné par l'informatique et l'intelligence artificielle, je cherche constamment à repousser les limites de la technologie.</p><p class="reveal" data-i18n="about_p1">Étudiant en cycle ingénieur à l'EMSI Marrakech, je combine une solide base théorique avec une expérience pratique sur des projets concrets allant du développement web full-stack à la conception de modèles d'IA.</p><p class="reveal" data-i18n="about_p2">Mon approche : concevoir des solutions élégantes pour des problèmes complexes, avec un souci constant de la qualité du code et de l'expérience utilisateur.</p><div class="a-stats reveal"><div class="st-card"><div class="st-n">6+</div><div class="st-l" data-i18n="stat_lang">Langages</div></div><div class="st-card"><div class="st-n">3</div><div class="st-l" data-i18n="stat_projects">Projets</div></div><div class="st-card"><div class="st-n">4+</div><div class="st-l" data-i18n="stat_certs">Certifs</div></div></div></div>
   </div>
 </section>
-
-<section id="skills">
-  <div class="s-label">02 — Compétences</div>
-  <h2 class="s-title reveal">Stack <span class="gt">technique</span></h2>
-  <div class="sk-grid">
-    <div class="sk-cat reveal">
-      <div class="sk-ch"><div class="sk-ci"><i class="fa-solid fa-code"></i></div><div class="sk-ct">Langages de programmation</div></div>
-      <div class="sk-item"><div class="sk-row"><span class="sk-nm">Python</span><span class="sk-pc">90%</span></div><div class="sk-bg"><div class="sk-fill" data-w="90"></div></div></div>
-      <div class="sk-item"><div class="sk-row"><span class="sk-nm">JavaScript</span><span class="sk-pc">85%</span></div><div class="sk-bg"><div class="sk-fill" data-w="85"></div></div></div>
-      <div class="sk-item"><div class="sk-row"><span class="sk-nm">Java</span><span class="sk-pc">75%</span></div><div class="sk-bg"><div class="sk-fill" data-w="75"></div></div></div>
-      <div class="sk-item"><div class="sk-row"><span class="sk-nm">C / C++</span><span class="sk-pc">80%</span></div><div class="sk-bg"><div class="sk-fill" data-w="80"></div></div></div>
-      <div class="sk-item"><div class="sk-row"><span class="sk-nm">PHP</span><span class="sk-pc">70%</span></div><div class="sk-bg"><div class="sk-fill" data-w="70"></div></div></div>
-    </div>
-    <div class="sk-cat reveal">
-      <div class="sk-ch"><div class="sk-ci"><i class="fa-solid fa-layer-group"></i></div><div class="sk-ct">Frameworks & Librairies</div></div>
-      <div class="sk-item"><div class="sk-row"><span class="sk-nm">React.js</span><span class="sk-pc">85%</span></div><div class="sk-bg"><div class="sk-fill" data-w="85"></div></div></div>
-      <div class="sk-item"><div class="sk-row"><span class="sk-nm">Node.js</span><span class="sk-pc">80%</span></div><div class="sk-bg"><div class="sk-fill" data-w="80"></div></div></div>
-      <div class="sk-item"><div class="sk-row"><span class="sk-nm">Laravel</span><span class="sk-pc">75%</span></div><div class="sk-bg"><div class="sk-fill" data-w="75"></div></div></div>
-      <div class="sk-item"><div class="sk-row"><span class="sk-nm">Flask</span><span class="sk-pc">80%</span></div><div class="sk-bg"><div class="sk-fill" data-w="80"></div></div></div>
-    </div>
-    <div class="sk-cat reveal">
-      <div class="sk-ch"><div class="sk-ci"><i class="fa-solid fa-database"></i></div><div class="sk-ct">Bases de données & Outils</div></div>
-      <div class="sk-item"><div class="sk-row"><span class="sk-nm">MySQL</span><span class="sk-pc">85%</span></div><div class="sk-bg"><div class="sk-fill" data-w="85"></div></div></div>
-      <div class="sk-item"><div class="sk-row"><span class="sk-nm">MongoDB</span><span class="sk-pc">80%</span></div><div class="sk-bg"><div class="sk-fill" data-w="80"></div></div></div>
-      <div class="sk-item"><div class="sk-row"><span class="sk-nm">Git / GitHub</span><span class="sk-pc">88%</span></div><div class="sk-bg"><div class="sk-fill" data-w="88"></div></div></div>
-      <div class="sk-item"><div class="sk-row"><span class="sk-nm">Intelligence Artificielle</span><span class="sk-pc">75%</span></div><div class="sk-bg"><div class="sk-fill" data-w="75"></div></div></div>
-    </div>
-  </div>
-</section>
-
-<section id="projects">
-  <div class="s-label">03 — Projets</div>
-  <h2 class="s-title reveal">Réalisations <span class="gt">récentes</span></h2>
-  <div class="pj-grid">
-    <div class="pj-card reveal">
-      <div class="pj-n">// 001</div>
-      <div class="pj-ic" style="background:linear-gradient(135deg,rgba(139,92,246,.15),rgba(79,142,247,.15));border:1px solid rgba(139,92,246,.25)">🤖</div>
-      <h3 class="pj-t">Fake News Detection</h3>
-      <p class="pj-d">Modèle de machine learning pour détecter les fausses informations. NLP, traitement de texte et classification supervisée pour une haute précision.</p>
-      <div class="pj-tags"><span class="tag">Python</span><span class="tag">Flask</span><span class="tag">NLP</span><span class="tag">ML</span><span class="tag">IA</span></div>
-    </div>
-    <div class="pj-card reveal">
-      <div class="pj-n">// 002</div>
-      <div class="pj-ic" style="background:linear-gradient(135deg,rgba(34,211,238,.12),rgba(79,142,247,.12));border:1px solid rgba(34,211,238,.2)">💬</div>
-      <h3 class="pj-t">Blog avec Chat temps réel</h3>
-      <p class="pj-d">Application web full-stack combinant blog dynamique et messagerie instantanée avec WebSockets pour une communication en temps réel.</p>
-      <div class="pj-tags"><span class="tag">React</span><span class="tag">Node.js</span><span class="tag">MongoDB</span><span class="tag">Socket.io</span></div>
-    </div>
-    <div class="pj-card reveal">
-      <div class="pj-n">// 003</div>
-      <div class="pj-ic" style="background:linear-gradient(135deg,rgba(249,115,22,.12),rgba(239,68,68,.12));border:1px solid rgba(249,115,22,.2)">🏥</div>
-      <h3 class="pj-t">Gestion Rendez-vous Médicaux</h3>
-      <p class="pj-d">Système complet de gestion des rendez-vous médicaux avec interface admin, gestion des patients et médecins, et tableau de bord analytique.</p>
-      <div class="pj-tags"><span class="tag">C++</span><span class="tag">React</span><span class="tag">MongoDB</span><span class="tag">REST API</span></div>
-    </div>
-  </div>
-</section>
-
-<section id="education">
-  <div class="s-label">04 — Formation</div>
-  <h2 class="s-title reveal">Parcours <span class="gt">académique</span></h2>
-  <div class="ed-grid">
-    <div class="ed-card reveal">
-      <div class="ed-bx">🎓</div>
-      <div class="ed-y">2022 — En cours</div>
-      <div class="ed-s">EMSI — Marrakech</div>
-      <div class="ed-dg">Cycle Ingénieur — Génie Informatique</div>
-      <p class="ed-dt">École Marocaine des Sciences de l'Ingénieur. Formation d'excellence avec spécialisation en développement logiciel, intelligence artificielle et systèmes distribués.</p>
-    </div>
-    <div class="ed-card reveal">
-      <div class="ed-bx">📚</div>
-      <div class="ed-y">2021 — 2022</div>
-      <div class="ed-s">Lycée International</div>
-      <div class="ed-dg">Baccalauréat International — Sciences Physiques</div>
-      <p class="ed-dt">Programme scientifique rigoureux en physique, mathématiques et chimie. Solide formation en raisonnement analytique et scientifique.</p>
-    </div>
-  </div>
-</section>
-
-<section id="certifications">
-  <div class="s-label">05 — Certifications</div>
-  <h2 class="s-title reveal">Formations <span class="gt">continues</span></h2>
-  <div class="ce-list">
-    <div class="ce-item reveal"><div class="ce-ico"><i class="fa-solid fa-brain"></i></div><div><div class="ce-t">Machine Learning Specialization</div><div class="ce-p">Coursera · DeepLearning.AI</div></div></div>
-    <div class="ce-item reveal"><div class="ce-ico"><i class="fa-brands fa-python"></i></div><div><div class="ce-t">Python for Everybody</div><div class="ce-p">Coursera · University of Michigan</div></div></div>
-    <div class="ce-item reveal"><div class="ce-ico"><i class="fa-solid fa-server"></i></div><div><div class="ce-t">Full-Stack Web Development</div><div class="ce-p">Coursera · Johns Hopkins University</div></div></div>
-    <div class="ce-item reveal"><div class="ce-ico"><i class="fa-solid fa-network-wired"></i></div><div><div class="ce-t">Deep Learning Fundamentals</div><div class="ce-p">Coursera · DeepLearning.AI</div></div></div>
-    <div class="ce-item reveal"><div class="ce-ico"><i class="fa-solid fa-database"></i></div><div><div class="ce-t">Database Management & SQL</div><div class="ce-p">Coursera · UC Davis</div></div></div>
-    <div class="ce-item reveal"><div class="ce-ico"><i class="fa-brands fa-git-alt"></i></div><div><div class="ce-t">Version Control with Git</div><div class="ce-p">Coursera · Atlassian</div></div></div>
-  </div>
-</section>
-
-<section id="languages">
-  <div class="s-label">06 — Langues</div>
-  <h2 class="s-title reveal">Compétences <span class="gt">linguistiques</span></h2>
-  <div class="lg-grid">
-    <div class="lg-card ar reveal"><div class="lg-fl">🇲🇦</div><div class="lg-nm">Arabe</div><div class="lg-lv">Langue maternelle</div><div class="lg-dots"><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div></div></div>
-    <div class="lg-card fr reveal"><div class="lg-fl">🇫🇷</div><div class="lg-nm">Français</div><div class="lg-lv">Courant — C1</div><div class="lg-dots"><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot"></div></div></div>
-    <div class="lg-card en reveal"><div class="lg-fl">🇬🇧</div><div class="lg-nm">Anglais</div><div class="lg-lv">Intermédiaire — B2</div><div class="lg-dots"><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot"></div><div class="dot"></div></div></div>
-  </div>
-</section>
-
-<section id="contact">
-  <div class="s-label">07 — Contact</div>
-  <h2 class="s-title reveal">Travaillons <span class="gt">ensemble</span></h2>
-  <div class="ct-wrap">
-    <div class="ct-info">
-      <p class="reveal">Je suis disponible pour des opportunités de stage, alternance ou collaboration sur des projets innovants. N'hésitez pas à me contacter !</p>
-      <a href="tel:+212694612891" class="ct-item reveal">
-        <div class="ct-ic"><i class="fa-solid fa-phone"></i></div>
-        <div><div class="ct-lb">Téléphone</div><div class="ct-vl">+212 694-612891</div></div>
-        <i class="fa-solid fa-arrow-up-right-from-square" style="color:var(--text3);font-size:12px;margin-left:auto"></i>
-      </a>
-      <a href="mailto:elkarmi.amine.01@gmail.com" class="ct-item reveal">
-        <div class="ct-ic"><i class="fa-solid fa-envelope"></i></div>
-        <div><div class="ct-lb">Email</div><div class="ct-vl">elkarmi.amine.01@gmail.com</div></div>
-        <i class="fa-solid fa-arrow-up-right-from-square" style="color:var(--text3);font-size:12px;margin-left:auto"></i>
-      </a>
-      <div class="ct-item reveal" style="cursor:default">
-        <div class="ct-ic"><i class="fa-solid fa-location-dot"></i></div>
-        <div><div class="ct-lb">Ville</div><div class="ct-vl">Marrakech, Maroc</div></div>
-      </div>
-      <div class="soc-links reveal">
-        <a href="https://www.linkedin.com/in/amine-elkarmi-255a86243/" target="_blank" class="soc-a"><i class="fa-brands fa-linkedin-in"></i></a>
-        <a href="https://github.com/" target="_blank" class="soc-a"><i class="fa-brands fa-github"></i></a>
-        <a href="mailto:elkarmi.amine.01@gmail.com" class="soc-a"><i class="fa-solid fa-envelope"></i></a>
-      </div>
-    </div>
-    <div class="ct-form reveal">
-      <div class="fg"><label>Votre nom</label><input type="text" placeholder="Ahmed Benali"></div>
-      <div class="fg"><label>Email</label><input type="email" placeholder="contact@exemple.com"></div>
-      <div class="fg"><label>Message</label><textarea placeholder="Bonjour Amine, j'aimerais discuter d'une opportunité..."></textarea></div>
-      <button class="btn-p" style="width:100%;justify-content:center" onclick="alert('Message envoyé ! Merci')">
-        <i class="fa-solid fa-paper-plane"></i> Envoyer le message
-      </button>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="ft-logo">Amine Elkarmi</div>
-  <div class="ft-txt">2025 — Conçu avec passion</div>
-  <div style="display:flex;gap:1rem">
-    <a href="https://www.linkedin.com/in/amine-elkarmi-255a86243/" target="_blank" style="color:var(--text3);font-size:16px;text-decoration:none"><i class="fa-brands fa-linkedin"></i></a>
-    <a href="mailto:elkarmi.amine.01@gmail.com" style="color:var(--text3);font-size:16px;text-decoration:none"><i class="fa-solid fa-envelope"></i></a>
-  </div>
-</footer>
-
+<section id="skills"><div class="s-label"><span data-i18n="skills_label">02 — Compétences</span></div><h2 class="s-title reveal" data-i18n="skills_title">Stack <span class="gt">technique</span></h2><div class="sk-grid"><div class="sk-cat reveal"><div class="sk-ch"><div class="sk-ci"><i class="fa-solid fa-code"></i></div><div class="sk-ct" data-i18n="skill_cat1">Langages de programmation</div></div><div class="sk-item"><div class="sk-row"><span class="sk-nm">Python</span><span class="sk-pc">90%</span></div><div class="sk-bg"><div class="sk-fill" data-w="90"></div></div></div><div class="sk-item"><div class="sk-row"><span class="sk-nm">JavaScript</span><span class="sk-pc">85%</span></div><div class="sk-bg"><div class="sk-fill" data-w="85"></div></div></div><div class="sk-item"><div class="sk-row"><span class="sk-nm">Java</span><span class="sk-pc">75%</span></div><div class="sk-bg"><div class="sk-fill" data-w="75"></div></div></div><div class="sk-item"><div class="sk-row"><span class="sk-nm">C / C++</span><span class="sk-pc">80%</span></div><div class="sk-bg"><div class="sk-fill" data-w="80"></div></div></div><div class="sk-item"><div class="sk-row"><span class="sk-nm">PHP</span><span class="sk-pc">70%</span></div><div class="sk-bg"><div class="sk-fill" data-w="70"></div></div></div></div><div class="sk-cat reveal"><div class="sk-ch"><div class="sk-ci"><i class="fa-solid fa-layer-group"></i></div><div class="sk-ct" data-i18n="skill_cat2">Frameworks & Librairies</div></div><div class="sk-item"><div class="sk-row"><span class="sk-nm">React.js</span><span class="sk-pc">85%</span></div><div class="sk-bg"><div class="sk-fill" data-w="85"></div></div></div><div class="sk-item"><div class="sk-row"><span class="sk-nm">Node.js</span><span class="sk-pc">80%</span></div><div class="sk-bg"><div class="sk-fill" data-w="80"></div></div></div><div class="sk-item"><div class="sk-row"><span class="sk-nm">Laravel</span><span class="sk-pc">75%</span></div><div class="sk-bg"><div class="sk-fill" data-w="75"></div></div></div><div class="sk-item"><div class="sk-row"><span class="sk-nm">Flask</span><span class="sk-pc">80%</span></div><div class="sk-bg"><div class="sk-fill" data-w="80"></div></div></div></div><div class="sk-cat reveal"><div class="sk-ch"><div class="sk-ci"><i class="fa-solid fa-database"></i></div><div class="sk-ct" data-i18n="skill_cat3">Bases de données & Outils</div></div><div class="sk-item"><div class="sk-row"><span class="sk-nm">MySQL</span><span class="sk-pc">85%</span></div><div class="sk-bg"><div class="sk-fill" data-w="85"></div></div></div><div class="sk-item"><div class="sk-row"><span class="sk-nm">MongoDB</span><span class="sk-pc">80%</span></div><div class="sk-bg"><div class="sk-fill" data-w="80"></div></div></div><div class="sk-item"><div class="sk-row"><span class="sk-nm">Git / GitHub</span><span class="sk-pc">88%</span></div><div class="sk-bg"><div class="sk-fill" data-w="88"></div></div></div><div class="sk-item"><div class="sk-row"><span class="sk-nm">Intelligence Artificielle</span><span class="sk-pc">75%</span></div><div class="sk-bg"><div class="sk-fill" data-w="75"></div></div></div></div></div></section>
+<section id="projects"><div class="s-label"><span data-i18n="projects_label">03 — Projets</span></div><h2 class="s-title reveal" data-i18n="projects_title">Réalisations <span class="gt">récentes</span></h2><div class="pj-grid"><div class="pj-card reveal"><div class="pj-n">// 001</div><div class="pj-ic" style="background:linear-gradient(135deg,rgba(139,92,246,.15),rgba(79,142,247,.15));border:1px solid rgba(139,92,246,.25)">🤖</div><h3 class="pj-t" data-i18n="proj1_title">Fake News Detection</h3><p class="pj-d" data-i18n="proj1_desc">Modèle de machine learning pour détecter les fausses informations. NLP, traitement de texte et classification supervisée pour une haute précision.</p><div class="pj-tags"><span class="tag">Python</span><span class="tag">Flask</span><span class="tag">NLP</span><span class="tag">ML</span><span class="tag">IA</span></div></div><div class="pj-card reveal"><div class="pj-n">// 002</div><div class="pj-ic" style="background:linear-gradient(135deg,rgba(34,211,238,.12),rgba(79,142,247,.12));border:1px solid rgba(34,211,238,.2)">💬</div><h3 class="pj-t" data-i18n="proj2_title">Blog avec Chat temps réel</h3><p class="pj-d" data-i18n="proj2_desc">Application web full-stack combinant blog dynamique et messagerie instantanée avec WebSockets pour une communication en temps réel.</p><div class="pj-tags"><span class="tag">React</span><span class="tag">Node.js</span><span class="tag">MongoDB</span><span class="tag">Socket.io</span></div></div><div class="pj-card reveal"><div class="pj-n">// 003</div><div class="pj-ic" style="background:linear-gradient(135deg,rgba(249,115,22,.12),rgba(239,68,68,.12));border:1px solid rgba(249,115,22,.2)">🏥</div><h3 class="pj-t" data-i18n="proj3_title">Gestion Rendez-vous Médicaux</h3><p class="pj-d" data-i18n="proj3_desc">Système complet de gestion des rendez-vous médicaux avec interface admin, gestion des patients et médecins, et tableau de bord analytique.</p><div class="pj-tags"><span class="tag">C++</span><span class="tag">React</span><span class="tag">MongoDB</span><span class="tag">REST API</span></div></div></div></section>
+<section id="education"><div class="s-label"><span data-i18n="edu_label">04 — Formation</span></div><h2 class="s-title reveal" data-i18n="edu_title">Parcours <span class="gt">académique</span></h2><div class="ed-grid"><div class="ed-card reveal"><div class="ed-bx">🎓</div><div class="ed-y">2022 — En cours</div><div class="ed-s">EMSI — Marrakech</div><div class="ed-dg" data-i18n="edu1_deg">Cycle Ingénieur — Génie Informatique</div><p class="ed-dt" data-i18n="edu1_desc">École Marocaine des Sciences de l'Ingénieur. Formation d'excellence avec spécialisation en développement logiciel, intelligence artificielle et systèmes distribués.</p></div><div class="ed-card reveal"><div class="ed-bx">📚</div><div class="ed-y">2021 — 2022</div><div class="ed-s">Lycée International</div><div class="ed-dg" data-i18n="edu2_deg">Baccalauréat International — Sciences Physiques</div><p class="ed-dt" data-i18n="edu2_desc">Programme scientifique rigoureux en physique, mathématiques et chimie. Solide formation en raisonnement analytique et scientifique.</p></div></div></section>
+<section id="certifications"><div class="s-label"><span data-i18n="cert_label">05 — Certifications</span></div><h2 class="s-title reveal" data-i18n="cert_title">Formations <span class="gt">continues</span></h2><div class="ce-list"><div class="ce-item reveal"><div class="ce-ico"><i class="fa-solid fa-brain"></i></div><div><div class="ce-t" data-i18n="cert1_title">Machine Learning Specialization</div><div class="ce-p">Coursera · DeepLearning.AI</div></div></div><div class="ce-item reveal"><div class="ce-ico"><i class="fa-brands fa-python"></i></div><div><div class="ce-t" data-i18n="cert2_title">Python for Everybody</div><div class="ce-p">Coursera · University of Michigan</div></div></div><div class="ce-item reveal"><div class="ce-ico"><i class="fa-solid fa-server"></i></div><div><div class="ce-t" data-i18n="cert3_title">Full-Stack Web Development</div><div class="ce-p">Coursera · Johns Hopkins University</div></div></div><div class="ce-item reveal"><div class="ce-ico"><i class="fa-solid fa-network-wired"></i></div><div><div class="ce-t" data-i18n="cert4_title">Deep Learning Fundamentals</div><div class="ce-p">Coursera · DeepLearning.AI</div></div></div><div class="ce-item reveal"><div class="ce-ico"><i class="fa-solid fa-database"></i></div><div><div class="ce-t" data-i18n="cert5_title">Database Management & SQL</div><div class="ce-p">Coursera · UC Davis</div></div></div><div class="ce-item reveal"><div class="ce-ico"><i class="fa-brands fa-git-alt"></i></div><div><div class="ce-t" data-i18n="cert6_title">Version Control with Git</div><div class="ce-p">Coursera · Atlassian</div></div></div></div></section>
+<section id="languages"><div class="s-label"><span data-i18n="lang_label">06 — Langues</span></div><h2 class="s-title reveal" data-i18n="lang_title">Compétences <span class="gt">linguistiques</span></h2><div class="lg-grid"><div class="lg-card ar reveal"><div class="lg-fl">🇲🇦</div><div class="lg-nm">Arabe</div><div class="lg-lv" data-i18n="lang_ar_level">Langue maternelle</div><div class="lg-dots"><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div></div></div><div class="lg-card fr reveal"><div class="lg-fl">🇫🇷</div><div class="lg-nm">Français</div><div class="lg-lv" data-i18n="lang_fr_level">Courant — C1</div><div class="lg-dots"><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot"></div></div></div><div class="lg-card en reveal"><div class="lg-fl">🇬🇧</div><div class="lg-nm">Anglais</div><div class="lg-lv" data-i18n="lang_en_level">Intermédiaire — B2</div><div class="lg-dots"><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot"></div><div class="dot"></div></div></div></div></section>
+<section id="contact"><div class="s-label"><span data-i18n="contact_label">07 — Contact</span></div><h2 class="s-title reveal" data-i18n="contact_title">Travaillons <span class="gt">ensemble</span></h2><div class="ct-wrap"><div class="ct-info"><p class="reveal" data-i18n="contact_desc">Je suis disponible pour des opportunités de stage, alternance ou collaboration sur des projets innovants. N'hésitez pas à me contacter !</p><a href="tel:+212694612891" class="ct-item reveal"><div class="ct-ic"><i class="fa-solid fa-phone"></i></div><div><div class="ct-lb" data-i18n="contact_phone_label">Téléphone</div><div class="ct-vl">+212 694-612891</div></div><i class="fa-solid fa-arrow-up-right-from-square" style="color:var(--text3);font-size:12px;margin-left:auto"></i></a><a href="mailto:elkarmi.amine.01@gmail.com" class="ct-item reveal"><div class="ct-ic"><i class="fa-solid fa-envelope"></i></div><div><div class="ct-lb" data-i18n="contact_email_label">Email</div><div class="ct-vl">elkarmi.amine.01@gmail.com</div></div><i class="fa-solid fa-arrow-up-right-from-square" style="color:var(--text3);font-size:12px;margin-left:auto"></i></a><div class="ct-item reveal" style="cursor:default"><div class="ct-ic"><i class="fa-solid fa-location-dot"></i></div><div><div class="ct-lb" data-i18n="contact_city_label">Ville</div><div class="ct-vl" data-i18n="contact_city_value">Marrakech, Maroc</div></div></div><div class="soc-links reveal"><a href="https://www.linkedin.com/in/amine-elkarmi-255a86243/" target="_blank" class="soc-a"><i class="fa-brands fa-linkedin-in"></i></a><a href="https://github.com/" target="_blank" class="soc-a"><i class="fa-brands fa-github"></i></a><a href="mailto:elkarmi.amine.01@gmail.com" class="soc-a"><i class="fa-solid fa-envelope"></i></a></div></div><div class="ct-form reveal"><div class="fg"><label data-i18n="form_name_label">Votre nom</label><input type="text" placeholder="Ahmed Benali" data-i18n-placeholder="form_name_placeholder"></div><div class="fg"><label data-i18n="form_email_label">Email</label><input type="email" placeholder="contact@exemple.com" data-i18n-placeholder="form_email_placeholder"></div><div class="fg"><label data-i18n="form_msg_label">Message</label><textarea placeholder="Bonjour Amine, j'aimerais discuter d'une opportunité..." data-i18n-placeholder="form_msg_placeholder"></textarea></div><button class="btn-p" style="width:100%;justify-content:center" id="sendMsgBtn"><i class="fa-solid fa-paper-plane"></i> <span data-i18n="form_send_btn">Envoyer le message</span></button></div></div></section>
+<footer><div class="ft-logo">Amine Elkarmi</div><div class="ft-txt" data-i18n="footer_text">2025 — Conçu avec passion</div><div style="display:flex;gap:1rem"><a href="https://www.linkedin.com/in/amine-elkarmi-255a86243/" target="_blank" style="color:var(--text3);font-size:16px;text-decoration:none"><i class="fa-brands fa-linkedin"></i></a><a href="mailto:elkarmi.amine.01@gmail.com" style="color:var(--text3);font-size:16px;text-decoration:none"><i class="fa-solid fa-envelope"></i></a></div></footer>
 <script>
-// CURSOR
+// ======================== TRANSLATIONS (FR/EN) ========================
+const translations = {
+  en: {
+    loader_txt:"Loading...",
+    nav_about:"About", nav_skills:"Skills", nav_projects:"Projects", nav_education:"Education", nav_contact:"Contact", nav_cta:"Contact Me", nav_certifications:"Certifications",
+    hero_badge:"Available for internship / work-study",
+    hero_title_part1:"Student in", hero_title_part2:"Computer Engineering", hero_desc:"Passionate about software development and artificial intelligence, I build modern, high-performance and innovative digital solutions.",
+    hero_btn1:"See my projects", hero_btn2:"Download CV", scroll_text:"Scroll",
+    about_label:"01 — About", about_title:"Who <span class='gt'>am I?</span>", about_lead:"Passionate about computer science and AI, I constantly strive to push the boundaries of technology.",
+    about_p1:"Engineering student at EMSI Marrakech, I combine a solid theoretical background with practical experience on concrete projects ranging from full-stack web development to AI model design.",
+    about_p2:"My approach: design elegant solutions to complex problems, with a constant focus on code quality and user experience.",
+    stat_lang:"Languages", stat_projects:"Projects", stat_certs:"Certs",
+    skills_label:"02 — Skills", skills_title:"Tech <span class='gt'>stack</span>",
+    skill_cat1:"Programming Languages", skill_cat2:"Frameworks & Libraries", skill_cat3:"Databases & Tools",
+    projects_label:"03 — Projects", projects_title:"Recent <span class='gt'>achievements</span>",
+    proj1_title:"Fake News Detection", proj1_desc:"Machine learning model to detect fake information. NLP, text processing and supervised classification for high accuracy.",
+    proj2_title:"Blog with real-time chat", proj2_desc:"Full-stack web application combining dynamic blog and instant messaging with WebSockets for real-time communication.",
+    proj3_title:"Medical Appointment Management", proj3_desc:"Complete medical appointment management system with admin interface, patient and doctor management, and analytical dashboard.",
+    edu_label:"04 — Education", edu_title:"Academic <span class='gt'>path</span>",
+    edu1_deg:"Engineering Cycle — Computer Engineering", edu1_desc:"Moroccan School of Engineering Sciences. Excellence training with specialization in software development, AI and distributed systems.",
+    edu2_deg:"International Baccalaureate — Physical Sciences", edu2_desc:"Rigorous scientific program in physics, mathematics and chemistry. Strong analytical and scientific reasoning foundation.",
+    cert_label:"05 — Certifications", cert_title:"Continuous <span class='gt'>training</span>",
+    cert1_title:"Machine Learning Specialization", cert2_title:"Python for Everybody", cert3_title:"Full-Stack Web Development", cert4_title:"Deep Learning Fundamentals", cert5_title:"Database Management & SQL", cert6_title:"Version Control with Git",
+    lang_label:"06 — Languages", lang_title:"Linguistic <span class='gt'>skills</span>",
+    lang_ar_level:"Native", lang_fr_level:"Fluent — C1", lang_en_level:"Intermediate — B2",
+    contact_label:"07 — Contact", contact_title:"Let's work <span class='gt'>together</span>", contact_desc:"I am available for internship, work-study or collaboration on innovative projects. Feel free to contact me!",
+    contact_phone_label:"Phone", contact_email_label:"Email", contact_city_label:"City", contact_city_value:"Marrakech, Morocco",
+    form_name_label:"Your name", form_name_placeholder:"Ahmed Benali", form_email_label:"Email", form_email_placeholder:"contact@example.com", form_msg_label:"Message", form_msg_placeholder:"Hello Amine, I'd like to discuss an opportunity...", form_send_btn:"Send message",
+    footer_text:"2025 — Designed with passion"
+  },
+  fr: {
+    loader_txt:"Initialisation...",
+    nav_about:"À propos", nav_skills:"Compétences", nav_projects:"Projets", nav_education:"Formation", nav_contact:"Contact", nav_cta:"Contact Me", nav_certifications:"Certifications",
+    hero_badge:"Disponible pour stage / alternance",
+    hero_title_part1:"Étudiant en", hero_title_part2:"Génie Informatique", hero_desc:"Passionné par le développement logiciel et l'intelligence artificielle, je construis des solutions numériques modernes, performantes et innovantes.",
+    hero_btn1:"Voir mes projets", hero_btn2:"Télécharger CV", scroll_text:"Scroll",
+    about_label:"01 — À propos", about_title:"Qui suis-<span class='gt'>je ?</span>", about_lead:"Passionné par l'informatique et l'intelligence artificielle, je cherche constamment à repousser les limites de la technologie.",
+    about_p1:"Étudiant en cycle ingénieur à l'EMSI Marrakech, je combine une solide base théorique avec une expérience pratique sur des projets concrets allant du développement web full-stack à la conception de modèles d'IA.",
+    about_p2:"Mon approche : concevoir des solutions élégantes pour des problèmes complexes, avec un souci constant de la qualité du code et de l'expérience utilisateur.",
+    stat_lang:"Langages", stat_projects:"Projets", stat_certs:"Certifs",
+    skills_label:"02 — Compétences", skills_title:"Stack <span class='gt'>technique</span>",
+    skill_cat1:"Langages de programmation", skill_cat2:"Frameworks & Librairies", skill_cat3:"Bases de données & Outils",
+    projects_label:"03 — Projets", projects_title:"Réalisations <span class='gt'>récentes</span>",
+    proj1_title:"Fake News Detection", proj1_desc:"Modèle de machine learning pour détecter les fausses informations. NLP, traitement de texte et classification supervisée pour une haute précision.",
+    proj2_title:"Blog avec Chat temps réel", proj2_desc:"Application web full-stack combinant blog dynamique et messagerie instantanée avec WebSockets pour une communication en temps réel.",
+    proj3_title:"Gestion Rendez-vous Médicaux", proj3_desc:"Système complet de gestion des rendez-vous médicaux avec interface admin, gestion des patients et médecins, et tableau de bord analytique.",
+    edu_label:"04 — Formation", edu_title:"Parcours <span class='gt'>académique</span>",
+    edu1_deg:"Cycle Ingénieur — Génie Informatique", edu1_desc:"École Marocaine des Sciences de l'Ingénieur. Formation d'excellence avec spécialisation en développement logiciel, intelligence artificielle et systèmes distribués.",
+    edu2_deg:"Baccalauréat International — Sciences Physiques", edu2_desc:"Programme scientifique rigoureux en physique, mathématiques et chimie. Solide formation en raisonnement analytique et scientifique.",
+    cert_label:"05 — Certifications", cert_title:"Formations <span class='gt'>continues</span>",
+    cert1_title:"Machine Learning Specialization", cert2_title:"Python for Everybody", cert3_title:"Full-Stack Web Development", cert4_title:"Deep Learning Fundamentals", cert5_title:"Database Management & SQL", cert6_title:"Version Control with Git",
+    lang_label:"06 — Langues", lang_title:"Compétences <span class='gt'>linguistiques</span>",
+    lang_ar_level:"Langue maternelle", lang_fr_level:"Courant — C1", lang_en_level:"Intermédiaire — B2",
+    contact_label:"07 — Contact", contact_title:"Travaillons <span class='gt'>ensemble</span>", contact_desc:"Je suis disponible pour des opportunités de stage, alternance ou collaboration sur des projets innovants. N'hésitez pas à me contacter !",
+    contact_phone_label:"Téléphone", contact_email_label:"Email", contact_city_label:"Ville", contact_city_value:"Marrakech, Maroc",
+    form_name_label:"Votre nom", form_name_placeholder:"Ahmed Benali", form_email_label:"Email", form_email_placeholder:"contact@exemple.com", form_msg_label:"Message", form_msg_placeholder:"Bonjour Amine, j'aimerais discuter d'une opportunité...", form_send_btn:"Envoyer le message",
+    footer_text:"2025 — Conçu avec passion"
+  }
+};
+
+let currentLang = localStorage.getItem('lang') || 'fr';
+function applyLanguage(lang) {
+  const t = translations[lang];
+  if (!t) return;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) {
+      if (el.innerHTML && el.innerHTML.includes('<span')) {
+        // preserve span if needed but for simplicity replace html
+        el.innerHTML = t[key];
+      } else {
+        el.innerText = t[key];
+      }
+    }
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (t[key] !== undefined) el.placeholder = t[key];
+  });
+  document.getElementById('langLabel').innerText = lang.toUpperCase();
+  localStorage.setItem('lang', lang);
+  currentLang = lang;
+}
+
+// ======================== LIGHT MODE ========================
+let isLight = localStorage.getItem('theme') === 'light';
+function applyTheme() {
+  if (isLight) {
+    document.body.classList.add('light-mode');
+    document.getElementById('themeToggle').innerHTML = '<i class="fa-solid fa-sun"></i>';
+  } else {
+    document.body.classList.remove('light-mode');
+    document.getElementById('themeToggle').innerHTML = '<i class="fa-solid fa-moon"></i>';
+  }
+}
+function toggleTheme() {
+  isLight = !isLight;
+  localStorage.setItem('theme', isLight ? 'light' : 'dark');
+  applyTheme();
+}
+document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+applyTheme();
+
+// ======================== LANGUAGE TOGGLE ========================
+document.getElementById('langToggle').addEventListener('click', () => {
+  const newLang = currentLang === 'fr' ? 'en' : 'fr';
+  applyLanguage(newLang);
+});
+applyLanguage(currentLang);
+
+// ======================== EXISTING SCRIPTS ========================
+// Cursor
 var cur=document.getElementById('cur'),curR=document.getElementById('cur-r');
 var mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY});
@@ -401,8 +393,7 @@ document.querySelectorAll('a,button,.pj-card,.sk-cat,.ce-item,.lg-card,.ed-card'
   el.addEventListener('mouseenter',function(){cur.style.width='20px';cur.style.height='20px';curR.style.width='52px';curR.style.height='52px'});
   el.addEventListener('mouseleave',function(){cur.style.width='12px';cur.style.height='12px';curR.style.width='36px';curR.style.height='36px'});
 });
-
-// LOADER — disparait apres 1.8s QUOI QU'IL ARRIVE
+// Loader
 var ldone=false;
 function hideLoader(){
   if(ldone)return; ldone=true;
@@ -411,16 +402,13 @@ function hideLoader(){
   l.style.opacity='0';
   setTimeout(function(){l.style.display='none';initReveal()},650);
 }
-setTimeout(hideLoader,1800);  // timeout absolu
-
-// HAMBURGER
+setTimeout(hideLoader,1800);
+// Hamburger
 document.getElementById('ham').addEventListener('click',function(){document.getElementById('mobNav').classList.toggle('open')});
 function closeMob(){document.getElementById('mobNav').classList.remove('open')}
-
-// NAVBAR
-window.addEventListener('scroll',function(){document.getElementById('navbar').style.background=window.scrollY>50?'rgba(5,5,8,.97)':'rgba(5,5,8,.75)'});
-
-// REVEAL + SKILL BARS
+// Navbar scroll
+window.addEventListener('scroll',function(){document.getElementById('navbar').style.background=window.scrollY>50?'rgba(5,5,8,.97)':(document.body.classList.contains('light-mode')?'rgba(255,255,255,.85)':'rgba(5,5,8,.75)')});
+// Reveal + skill bars
 function initReveal(){
   var els=document.querySelectorAll('.reveal');
   var io=new IntersectionObserver(function(entries){
@@ -433,8 +421,7 @@ function initReveal(){
   },{threshold:.5});
   bars.forEach(function(b){bio.observe(b)});
 }
-
-// THREE.JS — charge en async, ne bloque rien
+// Three.js
 function initThree(){
   if(typeof THREE==='undefined')return;
   var canvas=document.getElementById('three-canvas');
@@ -480,12 +467,21 @@ function initThree(){
     renderer.render(scene,camera);
   })();
 }
-// Inject Three.js script tag dynamically
 var sc=document.createElement('script');
 sc.src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
 sc.onload=initThree;
 sc.onerror=function(){console.warn('Three.js non disponible, fond statique.')};
 document.body.appendChild(sc);
+// fix contact button alert
+document.getElementById('sendMsgBtn').addEventListener('click',function(){alert(currentLang === 'fr' ? 'Message envoyé ! Merci' : 'Message sent! Thank you');});
+// Update nav background on theme toggle
+const observer = new MutationObserver(() => {
+  const nav = document.getElementById('navbar');
+  if(window.scrollY>50) nav.style.background = document.body.classList.contains('light-mode') ? 'rgba(255,255,255,.97)' : 'rgba(5,5,8,.97)';
+  else nav.style.background = document.body.classList.contains('light-mode') ? 'rgba(255,255,255,.85)' : 'rgba(5,5,8,.75)';
+});
+observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
 </script>
 </body>
 </html>
+```
