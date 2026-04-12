@@ -103,7 +103,12 @@ section{padding:clamp(4rem,10vw,8rem) clamp(1.5rem,8vw,10rem)}
 .p-r2{width:360px;height:360px;background:conic-gradient(from 180deg,var(--cyan),transparent,var(--cyan));mask:radial-gradient(farthest-side,transparent calc(100% - 1px),#fff calc(100% - 1px));-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 1px),#fff calc(100% - 1px));animation-direction:reverse;animation-duration:12s}
 @keyframes spin{to{transform:rotate(360deg)}}
 .p-frame{width:260px;height:260px;border-radius:50%;overflow:hidden;position:relative;z-index:2;border:3px solid rgba(139,92,246,.3);box-shadow:0 0 60px rgba(139,92,246,.2)}
-.p-frame img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.p-frame img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform .6s var(--ease), opacity 0.1s ease-in-out; /* Ajout de la transition d'opacité */
+}
 .p-frame:hover img{transform:scale(1.08)}
 .p-ph{width:100%;height:100%;background:linear-gradient(135deg,var(--card2),var(--card));display:flex;align-items:center;justify-content:center;font-size:5rem;color:var(--violet)}
 .p-glow{position:absolute;width:200px;height:200px;background:radial-gradient(circle,rgba(139,92,246,.3),transparent 70%);border-radius:50%;z-index:1;animation:gp 3s ease-in-out infinite}
@@ -204,6 +209,9 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:2.5rem 
 .mob-nav.open{display:flex}
 .mob-nav a{font-family:var(--fd);font-size:2rem;font-weight:700;color:var(--text);text-decoration:none;transition:color .3s}
 .mob-nav a:hover{color:var(--violet2)}
+.profile-photo-fade {
+  opacity: 0 !important;
+}
 @media(max-width:900px){.a-grid{grid-template-columns:1fr;text-align:center;gap:3rem}.p-wrap{justify-content:center}.a-stats{grid-template-columns:repeat(3,1fr)}.ct-wrap{grid-template-columns:1fr;gap:3rem}.n-links{display:none}.hamburger{display:flex}.h-name{font-size:clamp(2.5rem,6vw,5rem)}.n-actions{gap:8px}}
 @media(max-width:600px){.a-stats{grid-template-columns:repeat(2,1fr)}.p-r1{width:240px;height:240px}.p-r2{width:280px;height:280px}.p-frame{width:200px;height:200px}.h-btns{flex-direction:column}.lg-grid{flex-direction:column}.h-name{font-size:clamp(2rem,11vw,3rem)}}
 </style>
@@ -258,7 +266,7 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:2.5rem 
 <section id="about">
   <div class="s-label"><span data-i18n="about_label">01 — À propos</span></div>
   <div class="a-grid">
-    <div class="p-wrap reveal"><div class="p-glow"></div><div class="p-ring p-r1"></div><div class="p-ring p-r2"></div><div class="p-frame"><img src="MonPhoto.jpg" alt="Amine Elkarmi" onerror="this.parentElement.innerHTML='<div class=\'p-ph\'><i class=\'fa-solid fa-user\'></i></div>'"></div></div>
+    <div class="p-wrap reveal"><div class="p-glow"></div><div class="p-ring p-r1"></div><div class="p-ring p-r2"></div><div class="p-frame"><img id="profile-photo" src="MonPhoto.png" alt="Amine Elkarmi" onerror="this.parentElement.innerHTML='<div class=\'p-ph\'><i class=\'fa-solid fa-user\'></i></div>'"></div></div>
     <div class="a-txt"><h2 class="s-title reveal" data-i18n="about_title">Qui suis-<span class="gt">je ?</span></h2><p class="lead reveal" data-i18n="about_lead">Passionné par l'informatique et l'intelligence artificielle, je cherche constamment à repousser les limites de la technologie.</p><p class="reveal" data-i18n="about_p1">Étudiant en cycle ingénieur à l'EMSI Marrakech, je combine une solide base théorique avec une expérience pratique sur des projets concrets allant du développement web full-stack à la conception de modèles d'IA.</p><p class="reveal" data-i18n="about_p2">Mon approche : concevoir des solutions élégantes pour des problèmes complexes, avec un souci constant de la qualité du code et de l'expérience utilisateur.</p><div class="a-stats reveal"><div class="st-card"><div class="st-n">6+</div><div class="st-l" data-i18n="stat_lang">Langages</div></div><div class="st-card"><div class="st-n">3</div><div class="st-l" data-i18n="stat_projects">Projets</div></div><div class="st-card"><div class="st-n">4+</div><div class="st-l" data-i18n="stat_certs">Certifs</div></div></div></div>
   </div>
 </section>
@@ -338,7 +346,6 @@ function applyLanguage(lang) {
     const key = el.getAttribute('data-i18n');
     if (t[key] !== undefined) {
       if (el.innerHTML && el.innerHTML.includes('<span')) {
-        // preserve span if needed but for simplicity replace html
         el.innerHTML = t[key];
       } else {
         el.innerText = t[key];
@@ -354,9 +361,11 @@ function applyLanguage(lang) {
   currentLang = lang;
 }
 
-// ======================== LIGHT MODE ========================
+// ======================== LIGHT MODE (avec animation photo) ========================
 let isLight = localStorage.getItem('theme') === 'light';
+
 function applyTheme() {
+  // Appliquer le thème visuel
   if (isLight) {
     document.body.classList.add('light-mode');
     document.getElementById('themeToggle').innerHTML = '<i class="fa-solid fa-sun"></i>';
@@ -364,14 +373,69 @@ function applyTheme() {
     document.body.classList.remove('light-mode');
     document.getElementById('themeToggle').innerHTML = '<i class="fa-solid fa-moon"></i>';
   }
+
+  const profileImg = document.getElementById('profile-photo');
+  if (!profileImg) return;
+
+  const newSrc = isLight ? 'MonPhoto-light.png' : 'MonPhoto.png';
+
+  // Éviter de changer si la source est déjà la bonne
+  if (profileImg.src.includes(newSrc)) return;
+
+  // Précharger la nouvelle image pour éviter un flash blanc
+  const preload = new Image();
+  preload.src = newSrc;
+  preload.onload = () => {
+    // L'image est prête, on lance l'animation de fondu
+    profileImg.classList.add('profile-photo-fade');
+
+    // Forcer le navigateur à appliquer l'opacité 0 avant de changer la source
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        profileImg.src = newSrc;
+        // Forcer un reflow pour que la nouvelle image s'affiche avec opacité 0
+        void profileImg.offsetWidth;
+        // Retirer la classe pour faire réapparaître l'image
+        profileImg.classList.remove('profile-photo-fade');
+      }, 150); // moitié de la transition pour un fondu enchaîné
+    });
+  };
+
+  // Fallback si l'image ne se charge pas rapidement
+  preload.onerror = () => {
+    // Même logique sans préchargement (on change directement)
+    profileImg.classList.add('profile-photo-fade');
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        profileImg.src = newSrc;
+        void profileImg.offsetWidth;
+        profileImg.classList.remove('profile-photo-fade');
+      }, 150);
+    });
+  };
 }
+
 function toggleTheme() {
   isLight = !isLight;
   localStorage.setItem('theme', isLight ? 'light' : 'dark');
   applyTheme();
 }
 document.getElementById('themeToggle').addEventListener('click', toggleTheme);
-applyTheme();
+
+// Appliquer le thème sans animation au chargement initial
+(function setInitialTheme() {
+  if (isLight) {
+    document.body.classList.add('light-mode');
+    document.getElementById('themeToggle').innerHTML = '<i class="fa-solid fa-sun"></i>';
+  } else {
+    document.body.classList.remove('light-mode');
+    document.getElementById('themeToggle').innerHTML = '<i class="fa-solid fa-moon"></i>';
+  }
+  const profileImg = document.getElementById('profile-photo');
+  if (profileImg) {
+    profileImg.src = isLight ? 'MonPhoto-light.png' : 'MonPhoto.png';
+  }
+})();
 
 // ======================== LANGUAGE TOGGLE ========================
 document.getElementById('langToggle').addEventListener('click', () => {
@@ -469,7 +533,7 @@ sc.src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
 sc.onload=initThree;
 sc.onerror=function(){console.warn('Three.js non disponible, fond statique.')};
 document.body.appendChild(sc);
-// fix contact button alert
+// Contact button alert
 document.getElementById('sendMsgBtn').addEventListener('click',function(){alert(currentLang === 'fr' ? 'Message envoyé ! Merci' : 'Message sent! Thank you');});
 // Update nav background on theme toggle
 const observer = new MutationObserver(() => {
